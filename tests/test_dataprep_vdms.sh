@@ -18,7 +18,7 @@ function build_docker_images() {
 
 function start_service() {
     cd $WORKPATH
-
+    export VDMS_URL="http://${ip_address}:55555"
     docker compose -f $WORKPATH/comps/dataprep/vdms/langchain/docker/docker-compose-dataprep-vdms.yaml up -d
 
     sleep 10s
