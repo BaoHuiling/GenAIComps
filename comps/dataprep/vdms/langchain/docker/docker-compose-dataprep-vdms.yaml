@@ -1,0 +1,30 @@
+# Copyright (C) 2024 Intel Corporation
+# SPDX-License-Identifier: Apache-2.0
+
+version: "3"
+services:
+  vdms-vector-db:
+    image: intellabs/vdms:v2.8.0
+    container_name: vdms-vector-db
+    ports:
+      - "55555:55555"
+  dataprep-vdms:
+    image: opea/dataprep-vdms:latest
+    container_name: dataprep-vdms-server
+    # entrypoint: bash
+    ports:
+      - "6007:6007"
+    ipc: host
+    environment:
+      http_proxy: ${http_proxy}
+      https_proxy: ${https_proxy}
+      no_proxy: ${no_proxy}
+      VDMS_URL: ${VDMS_URL:-"http://0.0.0.0:55555"}
+      COLLECTION_NAME: ${COLLECTION_NAME:-"video-test"}
+    volumes:
+      # - "path/to/your-videos:/home/user/comps/dataprep/vdms/langchain/your-videos" # mount your videos
+      - "/home/$USER/.cache/huggingface:/home/user/.cache/huggingface" # RECOMMENDED: use cache to avoid huggingface download
+    restart: unless-stopped
+networks:
+  default:
+    driver: bridge
