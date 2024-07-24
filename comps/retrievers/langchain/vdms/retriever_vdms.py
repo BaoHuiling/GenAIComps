@@ -70,7 +70,7 @@ def update_db(prompt, constraints):
 )
 @traceable(run_type="retriever")
 @register_statistics(names=["opea_service@retriever_vdms"])
-def retrieve(input: TextDoc):
+def retrieve(input: TextDoc) -> SearchedDocMetadata:
     start = time.time()
     constraints = None
     # Only similarity search is supported
