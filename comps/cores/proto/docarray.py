@@ -1,7 +1,7 @@
 # Copyright (C) 2024 Intel Corporation
 # SPDX-License-Identifier: Apache-2.0
 
-from typing import Optional
+from typing import List, Optional
 
 import numpy as np
 from docarray import BaseDoc, DocList
@@ -31,6 +31,15 @@ class DocPath(BaseDoc):
     process_table: bool = False
     table_strategy: str = "fast"
 
+class SearchedDocMetadata(BaseDoc):
+    retrieved_docs: List[TextDoc]
+    metadata: List[dict]
+    initial_query: str
+    score: List[float]
+    top_n: int = 1
+
+    class Config:
+        json_encoders = {np.ndarray: lambda x: x.tolist()}
 
 class EmbedDoc768(BaseDoc):
     text: str

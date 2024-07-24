@@ -1,0 +1,23 @@
+# Copyright (C) 2024 Intel Corporation
+# SPDX-License-Identifier: Apache-2.0
+
+version: "3"
+services:
+  retriever-vdms:
+    image: opea/retriever-vdms:latest
+    container_name: retriever-vdms-server
+    ports:
+      - "7000:7000"
+    ipc: host
+    environment:
+      http_proxy: ${http_proxy}
+      https_proxy: ${https_proxy}
+      no_proxy: ${no_proxy}
+      VDMS_URL: ${VDMS_URL:-"http://0.0.0.0:55555"}
+      COLLECTION_NAME: ${COLLECTION_NAME:-"video-test"}
+    volumes:
+      - "/home/$USER/.cache:/home/user/.cache" # RECOMMENDED: use cache to avoid download
+    restart: unless-stopped
+networks:
+  default:
+    driver: bridge
