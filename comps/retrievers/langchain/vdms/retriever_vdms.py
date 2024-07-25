@@ -83,7 +83,7 @@ def retrieve(input: TextDoc) -> SearchedDocMetadata:
     for r, score in search_res:
         searched_docs.append(TextDoc(text=r.page_content))
         metadata_list.append(r.metadata)
-        score_list.append(score) # TODO: check if needed
+        score_list.append(score) # TODO: place here for potential usage
     # print("searched_docs", searched_docs)
     # print("metadata_list", metadata_list)
     # print("score_list", score_list)
