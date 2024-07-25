@@ -63,7 +63,7 @@ def ingest_files_to_vdms(metadata_file_path):
             data['video'] = video
             video_name_list = [data["video_path"]]
             metadata_list = [data]
-            vectorstore.add_videos(  # TODO: delete 自定义的add_videos
+            vectorstore.add_videos(
                 paths=video_name_list,
                 metadatas=metadata_list,
                 start_time=[data['timestamp']],
