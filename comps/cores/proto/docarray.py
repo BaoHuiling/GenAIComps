@@ -1,7 +1,7 @@
 # Copyright (C) 2024 Intel Corporation
 # SPDX-License-Identifier: Apache-2.0
 
-from typing import Optional, Tuple, Union
+from typing import Dict, List, Optional, Tuple, Union
 
 import numpy as np
 from docarray import BaseDoc, DocList
@@ -72,10 +72,10 @@ class SearchedDoc(BaseDoc):
         json_encoders = {np.ndarray: lambda x: x.tolist()}
 
 class SearchedMultimodalDoc(BaseDoc):
-    retrieved_docs: DocList[TextImageDoc]
+    retrieved_docs: List[TextImageDoc]
     initial_query: str
     top_n: int = 1
-    metadata: Optional[DocList[dict]] = [{}]
+    metadata: Optional[List[Dict]] = None
 
     class Config:
         json_encoders = {np.ndarray: lambda x: x.tolist()}
