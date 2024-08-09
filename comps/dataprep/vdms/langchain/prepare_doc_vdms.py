@@ -22,8 +22,8 @@ logging.basicConfig(
 
 class ConfigDoc(BaseModel):
     video_folder: Optional[str] = Field("./videos", description="Path to folder containing videos to upload.")
-    chunck_duration: Optional[int] = Field(30, description="Duration in seconds of each video segment.")
-    clip_duration: Optional[int] = Field(10, description="Duration in seconds of the initial segment used for embedding calculation from each chunck.")
+    chunk_duration: Optional[int] = Field(30, description="Duration in seconds of each video segment.")
+    clip_duration: Optional[int] = Field(10, description="Duration in seconds of the initial segment used for embedding calculation from each chunk.")
 
 def read_json(path):
     with open(path) as f:
@@ -84,12 +84,12 @@ async def ingest_documents(input: Optional[ConfigDoc]):
     Optional
     meta_output_dir = "./frame_metadata"
     video_folder = input.video_folder
-    chunck_duration = input.chunck_duration
+    chunk_duration = input.chunk_duration
     clip_duration = input.clip_duration
     
-    logging.info( f"video_folder: {video_folder}, meta_output_dir: {meta_output_dir}, chunck_duration: {chunck_duration}, clip_duration: {clip_duration}")
+    logging.info( f"video_folder: {video_folder}, meta_output_dir: {meta_output_dir}, chunk_duration: {chunk_duration}, clip_duration: {clip_duration}")
     
-    process_all_videos(video_folder, meta_output_dir, chunck_duration, clip_duration) # extract frames
+    process_all_videos(video_folder, meta_output_dir, chunk_duration, clip_duration) # extract frames
     global_metadata_file_path = meta_output_dir + "/metadata.json"
     ingest_files_to_vdms(global_metadata_file_path)
 

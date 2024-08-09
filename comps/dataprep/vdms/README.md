@@ -2,48 +2,72 @@
 
 # 🚀Start Microservice with Docker
 
-## Setup Environment Variables
+## 1. Setup Environment Variables
 
 ```bash
 export host_ip=${your_host_ip}
 export VDMS_URL="http://${host_ip}:55555"
-export COLLECTION_NAME=${your_collection_name} # optional
 export http_proxy=${your_http_proxy}
 export https_proxy=${your_http_proxy}
 export no_proxy=${no_proxy},${host_ip}
+export COLLECTION_NAME=${your_collection_name} # optional
 ```
 
-## Build Docker Image
+## 2. Build Docker Image
 
 ```bash
 docker build -t opea/dataprep-vdms:latest --build-arg https_proxy=$https_proxy --build-arg http_proxy=$http_proxy -f comps/dataprep/vdms/langchain/docker/Dockerfile .
 ```
 
-## Start the service
+## 3.a Start the service with default videos
 
 ```bash
 docker compose -f comps/dataprep/vdms/langchain/docker/docker-compose-dataprep-vdms.yaml up -d
 ```
 
-### Ingest videos 
+## 4.a Ingest videos with default videos
+
+Use default video folder: videos
 
 ```bash
-# use default video folder: videos
+ip_address=$(hostname -I | awk '{print $1}')
 curl -X 'POST' \
      -H 'Content-Type: application/json' \
      -H 'accept: application/json' \
      -d '{}' \
-     'http://{host_ip}:6007/v1/dataprep'
+     "http://${ip_address}:6007/v1/dataprep"
+```
 
-# use customized folder
-#   - please prepare the videos before building the image
-#   - or mount the folder in docker compose yaml
-# video_folder: Path to folder containing videos to upload.
-# chunck_duration: Duration in seconds of each video segment.
-# clip_duration: Duration in seconds of the initial segment used for embedding calculation from each chunck.
+## 3.b Start the service with custom videos
+
+To use customized videos, please mount the video folder in docker compose yaml as follow:
+
+```yaml
+services:
+  dataprep-vdms:
+    ...
+    volumes:
+      - "path/to/your-videos:/home/user/comps/dataprep/vdms/langchain/your-videos"
+```
+
+Then start the service
+
+```bash
+docker compose -f comps/dataprep/vdms/langchain/docker/docker-compose-dataprep-vdms.yaml up -d
+```
+
+## 4.b Ingest videos with custom videos
+
+Parameters:
+- video_folder: Path to folder containing videos to upload.
+- chunk_duration: Duration in seconds of each video segment.
+- clip_duration: Duration in seconds of the initial segment used for embedding calculation from each chunk.
+> please ensure the videos are mounted
+
+```bash
 curl -X 'POST' \
      -H 'Content-Type: application/json' \
      -H 'accept: application/json' \
-     -d '{ "video_folder": "./videos", "chunck_duration": 30, "clip_duration": 10}' \
-     'http://{host_ip}:6007/v1/dataprep'
+     -d '{ "video_folder": "./videos", "chunk_duration": 30, "clip_duration": 10}' \
+     "http://${ip_address}:6007/v1/dataprep"
 ```

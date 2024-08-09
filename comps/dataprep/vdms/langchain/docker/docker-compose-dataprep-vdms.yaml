@@ -1,7 +1,6 @@
 # Copyright (C) 2024 Intel Corporation
 # SPDX-License-Identifier: Apache-2.0
 
-version: "3"
 services:
   vdms-vector-db:
     image: intellabs/vdms:v2.8.0
@@ -23,7 +22,8 @@ services:
       COLLECTION_NAME: ${COLLECTION_NAME:-"video-test"}
     volumes:
       # - "path/to/your-videos:/home/user/comps/dataprep/vdms/langchain/your-videos" # mount your videos
-      - "/home/$USER/.cache/huggingface:/home/user/.cache/huggingface" # RECOMMENDED: use cache to avoid huggingface download
+      - "/home/$USER/.cache/huggingface:/home/user/.cache/huggingface"
+      - "/home/$USER/.cache/clip:/home/user/.cache/clip"
     restart: unless-stopped
 networks:
   default:
