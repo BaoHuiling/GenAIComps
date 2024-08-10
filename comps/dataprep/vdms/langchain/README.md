@@ -19,15 +19,15 @@ export COLLECTION_NAME=${your_collection_name} # optional
 docker build -t opea/dataprep-vdms:latest --build-arg https_proxy=$https_proxy --build-arg http_proxy=$http_proxy -f comps/dataprep/vdms/langchain/docker/Dockerfile .
 ```
 
-## 3.a Start the service with default videos
+## 3 Start the service
 
 ```bash
 docker compose -f comps/dataprep/vdms/langchain/docker/docker-compose-dataprep-vdms.yaml up -d
 ```
 
-## 4.a Ingest videos with default videos
+## 4 Ingest videos
 
-Use default video folder: videos
+To use customized videos, please add to video folder `comps/dataprep/vdms/langchain/videos`, it will be mounted to the container.
 
 ```bash
 ip_address=$(hostname -I | awk '{print $1}')
@@ -38,31 +38,10 @@ curl -X 'POST' \
      "http://${ip_address}:6007/v1/dataprep"
 ```
 
-## 3.b Start the service with custom videos
-
-To use customized videos, please mount the video folder in docker compose yaml as follow:
-
-```yaml
-services:
-  dataprep-vdms:
-    ...
-    volumes:
-      - "path/to/your-videos:/home/user/comps/dataprep/vdms/langchain/your-videos"
-```
-
-Then start the service
-
-```bash
-docker compose -f comps/dataprep/vdms/langchain/docker/docker-compose-dataprep-vdms.yaml up -d
-```
-
-## 4.b Ingest videos with custom videos
-
-Parameters:
-- video_folder: Path to folder containing videos to upload.
-- chunk_duration: Duration in seconds of each video segment.
-- clip_duration: Duration in seconds of the initial segment used for embedding calculation from each chunk.
-> please ensure the videos are mounted
+Configurable parameter:
+- video_folder: Path to folder containing videos to upload. Default: ./videos
+- chunk_duration: Duration in seconds of each video segment. Default: 30s
+- clip_duration: Duration in seconds of the initial segment used for embedding calculation from each chunk. Default: 10s
 
 ```bash
 curl -X 'POST' \

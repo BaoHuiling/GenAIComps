@@ -33,9 +33,10 @@ RUN tar -zxf /home/user/comps/dataprep/vdms/langchain/langchain-community.tar.gz
 COPY --chown=user:user comps /home/user/comps
 # RUN mkdir -p /home/user/comps/dataprep/vdms/langchain/frame_metadata && chown -R user /home/user/comps/dataprep/vdms/langchain/frame_metadata
 
-ENV PYTHONPATH=$PYTHONPATH:/home/user
+ENV PYTHONPATH=/home/user
 
 
 WORKDIR /home/user/comps/dataprep/vdms/langchain
+RUN pip install uvicorn
 
-ENTRYPOINT ["python", "prepare_doc_vdms.py"]
+ENTRYPOINT ["bash","start.sh"]

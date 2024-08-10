@@ -13,6 +13,7 @@ services:
     # entrypoint: bash
     ports:
       - "6007:6007"
+      - "6005:6005" # video file server
     ipc: host
     environment:
       http_proxy: ${http_proxy}
@@ -21,7 +22,7 @@ services:
       VDMS_URL: ${VDMS_URL:-"http://0.0.0.0:55555"}
       COLLECTION_NAME: ${COLLECTION_NAME:-"video-test"}
     volumes:
-      # - "path/to/your-videos:/home/user/comps/dataprep/vdms/langchain/your-videos" # mount your videos
+      - "../videos:/home/user/comps/dataprep/vdms/langchain/videos"
       - "/home/$USER/.cache/huggingface:/home/user/.cache/huggingface"
       - "/home/$USER/.cache/clip:/home/user/.cache/clip"
     restart: unless-stopped
