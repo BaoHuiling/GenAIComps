@@ -12,14 +12,15 @@ prometheus_fastapi_instrumentator
 shortuuid
 
 # microservice
-opencv-python-headless #cv2
-langchain==0.2.9
-langchain-core==0.2.21
-langchain-experimental==0.0.60
-langchain-text-splitters==0.2.2
-langsmith==0.1.92
-setuptools==69.5.1
-open-clip-torch==2.24.0 # CLIP
+opencv-python-headless
+langchain
+langchain-core
+langchain-experimental
+langchain-text-splitters
+langchain-community
+langsmith
+setuptools
+open-clip-torch==2.24.0
 vdms
 faiss-cpu
 tzlocal
@@ -27,13 +28,3 @@ decord
 einops
 torch==1.13.1 --index-url https://download.pytorch.org/whl/cpu # videollama
 torchvision==0.14.1 --index-url https://download.pytorch.org/whl/cpu # videollama
-
-# TODO: delete
-# packaging
-# metafunctions
-# omegaconf
-# pytorchvideo # videollama
-# torch==1.13.1 --index-url https://download.pytorch.org/whl/cpu # videollama
-# torchaudio==0.13.1 --index-url https://download.pytorch.org/whl/cpu # videollama
-# torchvision==0.14.1 --index-url https://download.pytorch.org/whl/cpu # videollama
-# webdataset # videollama
