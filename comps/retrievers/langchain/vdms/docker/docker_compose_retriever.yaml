@@ -4,8 +4,8 @@
 version: "3"
 services:
   retriever-vdms:
-    image: opea/retriever-vdms:latest
-    container_name: retriever-vdms-server
+    image: opea/retriever-vdms:huiling
+    container_name: retriever-vdms-server-huiling
     ports:
       - "7000:7000"
     ipc: host

@@ -10,7 +10,7 @@ ip_address=$(hostname -I | awk '{print $1}')
 
 function build_docker_images() {
     cd $WORKPATH
-    docker build -t opea/retriever-vdms:latest --build-arg https_proxy=$https_proxy --build-arg http_proxy=$http_proxy -f comps/retrievers/langchain/vdms/docker/Dockerfile .
+    docker build -t opea/retriever-vdms:huiling --build-arg https_proxy=$https_proxy --build-arg http_proxy=$http_proxy -f comps/retrievers/langchain/vdms/docker/Dockerfile .
 }
 
 function start_service() {

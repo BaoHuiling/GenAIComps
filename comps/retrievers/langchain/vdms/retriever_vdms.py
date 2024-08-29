@@ -5,14 +5,9 @@ import datetime
 from dateparser.search import search_dates
 import os
 import time
-
-
-from langsmith import traceable
 from langchain_community.vectorstores import VDMS # type: ignore
 from langchain_community.vectorstores.vdms import VDMS_Client # type: ignore
-
 from config import COLLECTION_NAME, VDMS_HOST, VDMS_PORT, MEANCLIP_CFG
-
 from comps import (
     SearchedDocMetadata,
     ServiceType,
@@ -68,7 +63,6 @@ def update_db(prompt, constraints):
     host="0.0.0.0",
     port=7000,
 )
-@traceable(run_type="retriever")
 @register_statistics(names=["opea_service@retriever_vdms"])
 def retrieve(input: TextDoc) -> SearchedDocMetadata:
     start = time.time()

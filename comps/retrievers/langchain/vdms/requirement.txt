@@ -16,7 +16,6 @@ langchain==0.2.9
 langchain-core==0.2.21
 langchain-experimental==0.0.60
 langchain-text-splitters==0.2.2
-langsmith==0.1.92
 open-clip-torch==2.24.0 # CLIP
 vdms
 faiss-cpu
