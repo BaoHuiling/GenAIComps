@@ -6,9 +6,12 @@ import logging
 from typing import Optional
 
 from pydantic import BaseModel, Field
-from langchain_community.vectorstores import VDMS # type: ignore
-from langchain_community.vectorstores.vdms import VDMS_Client # type: ignore
+from langchain_community.vectorstores.vdms import VDMS, VDMS_Client
+# hello
+# import sys
 
+# sys.path.append("../../../embeddings/langchain_multimodal/")
+# from embeddings_clip import vCLIP
 from config import COLLECTION_NAME, VDMS_HOST, VDMS_PORT, MEANCLIP_CFG
 from comps import opea_microservices, register_microservice
 from extract_store_frames import process_all_videos
@@ -44,14 +47,17 @@ def ingest_files_to_vdms(metadata_file_path):
     # create embeddings using local embedding model
     model, _ = setup_meanclip_model(MEANCLIP_CFG, device="cpu")
     embedder = MeanCLIPEmbeddings(model=model)
+    # embeddings = vCLIP({"model_name": "openai/clip-vit-base-patch32", "num_frm": 4})
+    # dimensions = embeddings.get_embedding_length()
     
     # create vectorstore
     vectorstore = VDMS(
                     client = client,
                     embedding = embedder,
-                    collection_name = COLLECTION_NAME,
+                    collection_name = "video-test",
+                    embedding_dimensions = 512,
                     engine = "FaissFlat",
-                    distance_strategy="IP"
+                    distance_strategy="L2"
                 )
     
     for idx, (video, data) in enumerate(GMetadata.items()):
