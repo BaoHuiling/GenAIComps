@@ -19,11 +19,11 @@ langchain-experimental
 langchain-text-splitters
 langchain-community
 setuptools
-open-clip-torch==2.24.0
+open-clip-torch
 vdms
 faiss-cpu
 tzlocal
 decord
 einops
-torch==1.13.1 --index-url https://download.pytorch.org/whl/cpu # videollama
-torchvision==0.14.1 --index-url https://download.pytorch.org/whl/cpu # videollama
+torch
+torchvision
